@@ -7,7 +7,7 @@ const styleSchema = new mongoose.Schema({
   photo_url: String,
   name: String,
   price: Number,
-  related: [productId]
+  related: Array
 });
 
 const Style = mongoose.model('Style', styleSchema);

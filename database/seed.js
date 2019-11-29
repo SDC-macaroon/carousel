@@ -9,11 +9,6 @@ const sampleStyles = [ {
   related: [2001]
 }];
 
-const chooseRandomAnimal = function() {
-  var currentAnimal = animalArray[(Math.random() * animalArray.length)];
-  return currentAnimal;
-}
-
 const buildSampleStyles = function() {
   var sampleStyles = [];
   var basePrice = 14.99;
@@ -22,6 +17,11 @@ const buildSampleStyles = function() {
   var quantityAddMax = 6;
   var animalArray = ['caribou', 'fox', 'hedgehog', 'hippo', 'lemur', 'manatee', 'orangutan', 'otter', 'panda', 'seal', 'sloth', 'warthog']
   var usedAnimals = [];
+
+  const chooseRandomAnimal = function() {
+    var currentAnimal = animalArray[(Math.random() * animalArray.length)];
+    return currentAnimal;
+  }
 
   var productId = 2001;
 
@@ -33,7 +33,7 @@ const buildSampleStyles = function() {
         currentAnimal = newAnimal;
       }
     }
-    var usedAnimals.push(currentAnimal);
+    usedAnimals.push(currentAnimal);
     var clusterSize = baseQuantity + (Math.random() * quantityAddMax);
     var clusterArray = [];
     for (let i = 0; i < clusterSize; i++) {
