@@ -1,17 +1,29 @@
 {
-  "name": "",
-  "version": "",
+  "name": "more-styles",
+  "version": "1.0.0",
   "description": "",
-  "author": "",
-  "license": "",
+  "main": "server/index.js",
+  "author": "John Reiland",
+  "license": "UNLICENSED",
   "engines": {
-    "node": ">=6.13.0"
+    "node": "^12"
   },
   "scripts": {
+    "start": "npx nodemon server/index.js",
+    "webpack": "webpack -d --watch",
+    "db:seed": "node database/seed.js"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-react": "^6.23.0",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "express": "^4.15.4",
+    "jquery": "^3.2.1",
+    "mongoose": "^4.11.6",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "webpack": "^2.2.1"
   }
 }
