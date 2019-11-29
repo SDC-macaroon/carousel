@@ -12,7 +12,7 @@ const styleSchema = new mongoose.Schema({
 
 const Style = mongoose.model('Style', styleSchema);
 
-let upsert = (styleArray, callback) => {
+let upsert = (style, callback) => {
   // Style.deleteMany(null, function(err) {
   //   if (err) {
   //     console.log(err);
@@ -20,15 +20,13 @@ let upsert = (styleArray, callback) => {
   // });
   // callback('record deleted');
 
-  for (let i = 0; i < styleArray.length; i++) {
-    Style.upsert({productId: styleArray[i].productId}, styleArray[i], {upsert: true}, function (err) {
-      if (err) {
-        callback(err, null);
-      } else {
-        callback(null, 'upsert successful');
-      }
-    });
-  }
+  Style.update({productId: style.productId}, style, {upsert: true}, function (err) {
+    if (err) {
+      callback('err', null);
+    } else {
+      callback(null, 'upsert successful');
+    }
+  });
 };
 
 exports.upsert = upsert;

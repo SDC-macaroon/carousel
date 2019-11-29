@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const styleDatabase = 'mongodb://localhost/morestyles';
+const morestyles = 'mongodb://localhost/morestyles';
 
-mongoose.connect(styleDatabase);
+mongoose.connect(morestyles);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Mongoose connection error'));
