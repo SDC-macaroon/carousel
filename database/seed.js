@@ -3,7 +3,7 @@ const Style = require('./Style.js');
 
 // NOTES -- This file seeds the database with 100 records. These records are generated in clusters, so as to allow for groups of records, each of which are related to the others in the same group. Each cluster shares a random animal, selected at time of seeding.
 
-// his var is the default state of the array which holds the generated sample records prior to db insertion. It is overwritten by the buildSampleStyles function.
+// This var is the default state of the array which holds the generated sample records prior to db insertion. It is overwritten by the buildSampleStyles function.
 var sampleStyles = [ {
   productId: 2001,
   photo_url: 'https://source.unsplash.com/1600x900/?error',
