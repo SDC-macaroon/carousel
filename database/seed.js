@@ -12,7 +12,7 @@ var sampleStyles = [{
 }];
 
 // Array of animals to be used as Unsplash search queries
-var animalArray = ['Cat', 'Fox', 'Hedgehog', 'Hippo', 'Lemur', 'Manatee', 'Orangutan', 'Otter', 'Panda', 'Rabbit', 'Racoon', 'Sloth', 'Squirrel', 'Walrus', 'Warthog'];
+var animalArray = ['Cat', 'Fox', 'Hedgehog', 'Hippo', 'Lemur', 'Manatee', 'Orangutan', 'Otter', 'Panda', 'Rabbit', 'Raccoon', 'Sloth', 'Squirrel', 'Walrus', 'Warthog'];
 
 // Shuffle animalArray
 const shuffleAnimalArray = function() {
