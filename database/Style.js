@@ -12,21 +12,17 @@ const styleSchema = new mongoose.Schema({
 
 const Style = mongoose.model('Style', styleSchema);
 
-let upsert = (style, callback) => {
-  // Style.deleteMany(null, function(err) {
-  //   if (err) {
-  //     console.log(err);
-  //   }
-  // });
-  // callback('record deleted');
+let upsert = (styles) => {
 
-  Style.update({productId: style.productId}, style, {upsert: true}, function (err) {
-    if (err) {
-      callback('err', null);
-    } else {
-      callback(null, 'upsert successful');
+  Style.bulkWrite(styles.map(style => ({
+    updateOne: {
+      filter: {productId: style.productId},
+      update: style,
+      upsert: true
     }
-  });
+  })))
+    .then(result => console.log('upserts successful'))
+    .catch(err => console.log('error during upsert: ', err));
 };
 
 exports.upsert = upsert;

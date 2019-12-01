@@ -5,13 +5,15 @@ var DIST_DIR = path.join(__dirname, '/client/public');
 module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?/,
+        test: [/\.jsx?/],
         include: SRC_DIR,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react']
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-react']
+          }
         }
       }
     ]
