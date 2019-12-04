@@ -26,4 +26,5 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 client/public/
+!client/public/index.html
 
