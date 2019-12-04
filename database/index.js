@@ -11,7 +11,7 @@ mongoose.connect(morestyles, {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Mongoose connection error'));
 db.once('open', () => {
-  console.log(`Mongoose connected`);
+  console.log('Mongoose connected');
 });
 
 module.exports = db;

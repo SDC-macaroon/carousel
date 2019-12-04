@@ -2,36 +2,42 @@ const axios = require('axios');
 const Style = require('./Style.js');
 const keys = require('../keys.js');
 
-let sampleStyles = [{
-  productId: 2001,
-  photo_url: 'https://source.unsplash.com/1600x900/?error',
-  name: 'This record should be overwritten by buildSampleStyles()',
-  price: 0,
-  related: [2001],
-}];
+// Declared using one example style for clarity, example is overwritten by buildSampleStyles().
+let sampleStyles = [
+  {
+    productId: 2001,
+    photo_url: 'https://source.unsplash.com/1600x900/?error',
+    name: 'This record should be overwritten by buildSampleStyles()',
+    price: 0,
+    related: [2002, 2003, 2004],
+  },
+];
 
-// Array of animals to be used as Unsplash search queries
-const animalArray = ['Cat', 'Fox', 'Hedgehog', 'Hippo', 'Lemur', 'Manatee', 'Orangutan', 'Otter', 'Panda', 'Rabbit', 'Raccoon', 'Sloth', 'Squirrel', 'Walrus', 'Warthog'];
+// Array of animals to be used as Unsplash search queries.
+const animals = ['Cat', 'Fox', 'Hedgehog', 'Hippo', 'Lemur', 'Manatee', 'Orangutan', 'Otter', 'Panda', 'Rabbit', 'Raccoon', 'Sloth', 'Squirrel', 'Walrus', 'Warthog'];
 
-// Shuffle animalArray
-const shuffleAnimalArray = () => {
-  for (let i = animalArray.length - 1; i > 0; i--) {
-    const hold = animalArray[i];
+// Shuffle animals for the sake of variety in testing.
+const shuffleAnimals = () => {
+  for (let i = animals.length - 1; i > 0; i--) {
+    const hold = animals[i];
     const randomIndex = Math.floor(Math.random() * (i + 1));
-    animalArray[i] = animalArray[randomIndex];
-    animalArray[randomIndex] = hold;
+    animals[i] = animals[randomIndex];
+    animals[randomIndex] = hold;
   }
-}
-shuffleAnimalArray();
+};
+shuffleAnimals();
 
-// Final array of arrays, each array of which will contain fifteen image urls
+// Final array of arrays, each array of which will contain fifteen image urls.
 const allAnimalUrls = [];
 
-
-
-// This function generates a series of clusters, stopping when 100 records have been generated. For each cluster, somewhere between 7 and 15 elements using the next random animal are generated, each with its own productId, photo_url, name, and price. When all elements in a cluster have been created, the productId of each of them are inserted into the 'related' property array of each other element. All styles within the cluster are then pushed to the sampleStyles array.
+// This function generates a series of "clusters," stopping when 100 records have been generated.
+// For each cluster, somewhere between 7 and 15 records using the next random animal are generated,
+//   each with its own productId, photo_url, name, and price.
+// When all records in a cluster have been created, the productId of each of them are inserted into
+//   the 'related' property array of each other element in the cluster.
+// All records within the cluster are then pushed to the sampleStyles array.
 const buildSampleStyles = () => {
-  sampleStyles = [];
+  sampleStyles = []; // Overwrites sampleSyles with empty array before populating it.
   const basePrice = 14.95;
   const priceAddMax = 11;
   const baseQuantity = 7;
@@ -41,69 +47,70 @@ const buildSampleStyles = () => {
   let animalIndex = 0;
 
   while (productId < 2101) {
-    const currentAnimal = animalArray[animalIndex];
+    const currentAnimal = animals[animalIndex];
     const clusterSize = baseQuantity + Math.floor(Math.random() * quantityAddMax);
-    const clusterArray = [];
+    const currentCluster = [];
     for (let i = 0; i < clusterSize; i++) {
       const generatedPrice = basePrice + (Math.floor(Math.random() * priceAddMax));
-      const styleTemplate = {
+      const newStyle = {
         productId,
         photo_url: allAnimalUrls[animalIndex][i],
-        name: currentAnimal + ' T-Shirt',
+        name: `${currentAnimal} T-Shirt`,
         price: generatedPrice,
         related: [],
       };
       if (productId <= 2100) {
-        clusterArray.push(styleTemplate);
-        console.log('buildSampleStyles: ', styleTemplate);
+        currentCluster.push(newStyle);
+        console.log('buildSampleStyles: ', newStyle);
       }
       productId++;
     }
-    for (let i = 0; i < clusterArray.length; i++) {      // Push the productId of each element
-      for (let j = 0; j < clusterArray.length; j++) {    // into the 'related' property array of
-        if (i !== j) {                                   // each other element in its cluster
-          clusterArray[i].related.push(clusterArray[j].productId);
+    // Push the productId of each record into the 'related' property array of each other
+    //   record in its cluster.
+    for (let i = 0; i < currentCluster.length; i++) {
+      for (let j = 0; j < currentCluster.length; j++) {
+        if (i !== j) {
+          currentCluster[i].related.push(currentCluster[j].productId);
         }
       }
-      sampleStyles.push(clusterArray[i]);
-      // console.log(clusterArray[i].name, clusterArray[i].productId);
+      sampleStyles.push(currentCluster[i]);
+      // console.log(currentCluster[i].name, currentCluster[i].productId);
     }
     animalIndex++;
   }
 };
 
-// This function inserts each generated style element from the sampleStyles array into the database.
-// It utilizes upsert, allowing items to be replaced if/when a given productId already exists in the
-//   database, and otherwise creating those items.
+// This function inserts the generated style records into the database.
+// It utilizes upsert, allowing records to be replaced if/when a given productId already exists in
+//   the database, and otherwise creating those records.
 const upsertSampleStyles = () => {
   Style.upsert(sampleStyles);
 };
 
-// This function generates an array of arrays equal to the number of animals in animalArray, each
+// This function generates an array of arrays equal to the number of animals in animals, each
 //   containing fifteen image urls of its coresponding animal as returned by API call to unsplash.
 // It then calls buildSampleStyles(), which uses the gathered urls to build sample data, and
 //   upsertSampleStyles() which inserts this sample data into the db.
 const populateAllAnimalUrls = async () => {
+  // Will contain fifteen image urls of the current animal.
+  let currentAnimalUrls = [];
+  // String which will be set and used to perform an axios GET request to the unsplash API.
+  let requestUrl = '';
 
-  let currentAnimalUrls = [];    // Will contain fifteen image urls of the current animal
-  let requestUrl = '';                  // String which will be set and used to perform an axios GET request to the unsplash API
+  const getUrls = async () => axios({
+    url: requestUrl,
+    method: 'GET',
+    headers: {
+      Authorization: `Client-ID ${keys.accessKey}`,
+    },
+  })
+    .then((res) => res.data)
+    .catch((error) => {
+      console.log(error);
+    });
 
-  const getUrls = async () => {
-    return axios({
-      url: requestUrl,
-      method: 'GET',
-      headers: {
-        Authorization: `Client-ID ${keys.accessKey}`,
-      },
-    })
-      .then((res) => res.data)
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  for (let i = 0; i < animalArray.length; i++) {
-    requestUrl = 'https://api.unsplash.com/photos/random/?query=' + animalArray[i] + '&orientation=portrait&count=15';
+  for (let i = 0; i < animals.length; i++) {
+    requestUrl = `https://api.unsplash.com/photos/random/?query=${animals[i]}&orientation=portrait&count=15`;
     const response = await getUrls();
     for (let j = 0; j < response.length; j++) {
       currentAnimalUrls.push(response[j].urls.small);

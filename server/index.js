@@ -8,7 +8,7 @@ app.get('/morestyles/:productId', (req, res) => {
   db.allRelated(req.params.productId, (err, data) => {
     if (err) {
       res.end('a problem occured with the request');
-      console.log('attempt to retrieve all products related to productId: ' + req.params.productId + ' ended in error: ' + err);
+      console.log(`attempt to retrieve all products related to productId: ${req.params.productId} ended in error: ${err}`);
     } else {
       res.json(data);
       res.end();
