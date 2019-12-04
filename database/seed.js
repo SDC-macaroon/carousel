@@ -18,7 +18,7 @@ var animalArray = ['Cat', 'Fox', 'Hedgehog', 'Hippo', 'Lemur', 'Manatee', 'Orang
 const shuffleAnimalArray = function() {
   for (let i = animalArray.length-1; i > 0; i--) {
     var hold = animalArray[i];
-    var randomIndex = Math.floor(Math.random()*i);
+    var randomIndex = Math.floor(Math.random()*(i+1));
     animalArray[i] = animalArray[randomIndex];
     animalArray[randomIndex] = hold;
   }
@@ -113,7 +113,6 @@ const buildSampleStyles = function() {
 // This function inserts each generated style element from the sampleStyles array into the database. It utilizes upsert, allowing items to be replaced if/when a given productId already exists in the database, and otherwise creating those items.
 const upsertSampleStyles = function() {
   Style.upsert(sampleStyles)
-    .then(() => db.disconnect())
 };
 
 populateAllAnimalUrls();

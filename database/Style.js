@@ -21,7 +21,7 @@ let upsert = (styles) => {
       upsert: true
     }
   })))
-    .then(result => console.log('upserts successful'))
+    .then((result) => db.close())
     .catch(err => console.log('error during upsert: ', err));
 };
 
