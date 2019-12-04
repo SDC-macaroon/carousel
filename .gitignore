@@ -1,6 +1,9 @@
 ## MAC files ##
 .DS_Store
 
+## API Keys ##
+keys.js
+
 ## NPM ##
 npm
 npm-debug.log
@@ -22,5 +25,6 @@ coverage
 
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
-dist/
+client/public/*
+!client/public/index.html
 
