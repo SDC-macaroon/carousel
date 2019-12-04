@@ -12,8 +12,27 @@ const styleSchema = new mongoose.Schema({
 
 const Style = mongoose.model('Style', styleSchema);
 
-let upsert = (styles) => {
+let allRelated = (id, callback) => {
+  Style.find({productId: id}, 'related', function(err, style) {
+    if (style.length === 0) {
+      callback(null, 'error: productId not found');
+      return;
+    }
+    if (err) {
+      callback(err, null);
+    } else {
+      Style.find({ productId: {$in: style[0].related} }, 'productId photo_url name price', function(err, styles) {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, styles);
+        }
+      })
+    }
+  })
+}
 
+let upsert = (styles) => {
   Style.bulkWrite(styles.map(style => ({
     updateOne: {
       filter: {productId: style.productId},
@@ -26,3 +45,4 @@ let upsert = (styles) => {
 };
 
 exports.upsert = upsert;
+exports.allRelated = allRelated;
