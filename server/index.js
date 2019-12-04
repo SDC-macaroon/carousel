@@ -9,7 +9,8 @@ app.get('/morestyles/:productId', function(req, res) {
       res.end('a problem occured with the request');
       console.log('attempt to retrieve all products related to productId: ' + req.params.productId + ' ended in error: ' + err);
     } else {
-      res.end(JSON.stringify(data));
+      res.json(data);
+      res.end();
     }
   });
 })

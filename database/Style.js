@@ -15,7 +15,7 @@ const Style = mongoose.model('Style', styleSchema);
 let allRelated = (id, callback) => {
   Style.find({productId: id}, 'related', function(err, style) {
     if (style.length === 0) {
-      callback(null, 'error: productId not found');
+      callback('error: productId not found', null );
       return;
     }
     if (err) {
