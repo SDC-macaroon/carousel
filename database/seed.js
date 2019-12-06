@@ -15,7 +15,7 @@ let sampleStyles = [
 ];
 
 // Array of animals to be used as Unsplash search queries.
-const animals = ['Cat', 'Dog', 'Fox', 'Hedgehog', 'Hippo', 'Horse', 'Lemur', 'Orangutan', 'Otter', 'Panda', 'Rabbit', 'Raccoon', 'Sloth', 'Squirrel', 'Walrus'];
+const animals = ['Cat', 'Dog', 'Fox', 'Hedgehog', 'Hippo', 'Horse', 'Kitten', 'Lemur', 'Orangutan', 'Otter', 'Panda', 'Puppy', 'Rabbit', 'Raccoon', 'Sloth', 'Squirrel', 'Walrus'];
 
 // Shuffle animals for the sake of variety in testing.
 const shuffleAnimals = () => {
@@ -51,7 +51,7 @@ const buildSampleStyles = () => {
     const currentAnimal = animals[animalIndex];
     const clusterSize = baseQuantity + Math.floor(Math.random() * quantityAddMax);
     const currentCluster = [];
-    for (let i = 0; i < clusterSize; i++) {
+    for (let i = 0; i < clusterSize && i < allAnimalUrls[animalIndex].length; i++) {
       const generatedPrice = basePrice + (Math.floor(Math.random() * priceAddMax));
       const newStyle = {
         productId,
@@ -112,6 +112,7 @@ const populateAllAnimalUrls = async () => {
 
   for (let i = 0; i < animals.length; i++) {
     requestUrl = `https://api.unsplash.com/photos/random/?query=${animals[i]}&orientation=squarish&count=15`;
+    // eslint-disable-next-line no-await-in-loop
     const response = await getUrls();
     for (let j = 0; j < response.length; j++) {
       currentAnimalUrls.push(response[j].urls.small);
