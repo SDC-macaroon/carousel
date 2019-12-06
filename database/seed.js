@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 const axios = require('axios');
 const Style = require('./Style.js');
 const keys = require('../keys.js');
@@ -14,7 +15,7 @@ let sampleStyles = [
 ];
 
 // Array of animals to be used as Unsplash search queries.
-const animals = ['Cat', 'Fox', 'Hedgehog', 'Hippo', 'Lemur', 'Manatee', 'Orangutan', 'Otter', 'Panda', 'Rabbit', 'Raccoon', 'Sloth', 'Squirrel', 'Walrus', 'Warthog'];
+const animals = ['Cat', 'Dog', 'Fox', 'Hedgehog', 'Hippo', 'Horse', 'Lemur', 'Orangutan', 'Otter', 'Panda', 'Rabbit', 'Raccoon', 'Sloth', 'Squirrel', 'Walrus'];
 
 // Shuffle animals for the sake of variety in testing.
 const shuffleAnimals = () => {
@@ -46,7 +47,7 @@ const buildSampleStyles = () => {
   let productId = 2001;
   let animalIndex = 0;
 
-  while (productId < 2101) {
+  while (productId < 2101 && animalIndex <= animals.length) {
     const currentAnimal = animals[animalIndex];
     const clusterSize = baseQuantity + Math.floor(Math.random() * quantityAddMax);
     const currentCluster = [];
@@ -61,7 +62,7 @@ const buildSampleStyles = () => {
       };
       if (productId <= 2100) {
         currentCluster.push(newStyle);
-        console.log('buildSampleStyles: ', newStyle);
+        // console.log('buildSampleStyles: ', newStyle);
       }
       productId++;
     }
@@ -110,7 +111,7 @@ const populateAllAnimalUrls = async () => {
     });
 
   for (let i = 0; i < animals.length; i++) {
-    requestUrl = `https://api.unsplash.com/photos/random/?query=${animals[i]}&orientation=portrait&count=15`;
+    requestUrl = `https://api.unsplash.com/photos/random/?query=${animals[i]}&orientation=squarish&count=15`;
     const response = await getUrls();
     for (let j = 0; j < response.length; j++) {
       currentAnimalUrls.push(response[j].urls.small);
