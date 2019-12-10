@@ -1,5 +1,6 @@
 module.exports = {
   extends: 'airbnb-base',
+  parser: "babel-eslint",
   rules: {
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
     "arrow-parens": ["error", "always"],

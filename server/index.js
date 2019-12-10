@@ -1,8 +1,11 @@
 const express = require('express');
+const path = require('path');
 const db = require('../database/Style.js');
 
 const app = express();
 const port = 3001;
+
+app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 
 app.get('/morestyles/:productId', (req, res) => {
   db.allRelated(req.params.productId, (err, data) => {
