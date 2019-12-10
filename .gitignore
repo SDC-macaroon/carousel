@@ -27,4 +27,5 @@ coverage
 build/
 client/public/*
 !client/public/index.html
+!client/public/style.css
 

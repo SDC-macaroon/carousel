@@ -1,0 +1,20 @@
+html, body {
+  height: 100%;
+}
+
+ul {
+  float:left;
+  width: 100%;
+  /* padding-top: 100%; */
+  white-space: nowrap;
+}
+
+li {
+  display: inline-block;
+  height: 100%;
+}
+
+.carousel {
+  width: 1600px;
+  overflow: hidden;
+}
