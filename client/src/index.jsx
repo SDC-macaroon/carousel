@@ -4,9 +4,8 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Carousel from './components/Carousel.jsx';
 
-// const pathArray = window.location.pathname.split('/');
-// console.log('pathArray: ', pathArray);
-const productId = '2091';
+const pathArray = window.location.pathname.split('/');
+const productId = pathArray[2];
 
 class App extends React.Component {
   constructor() {
@@ -21,12 +20,11 @@ class App extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: `/morestyles/${productId}`,
+      url: `api/morestyles/${productId}`,
       success: (result) => {
         this.setState({
           styles: result,
         });
-        console.log('result: ', result);
       },
     });
   }
@@ -51,7 +49,7 @@ class App extends React.Component {
   render() {
     const styleSlider = {
       transform: `translateX(${this.state.baseIndex * -25}%)`,
-      transition: '.75s',
+      transition: '.55s',
     };
     return <Carousel
       slider={styleSlider}
