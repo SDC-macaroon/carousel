@@ -51,13 +51,17 @@ class App extends React.Component {
       transform: `translateX(${this.state.baseIndex * -25}%)`,
       transition: '.55s',
     };
-    return <Carousel
+    return <div>
+      <Carousel
       slider={styleSlider}
       baseIndex={this.state.baseIndex}
       styles={this.state.styles}
       nextThree={this.nextThree}
       previousThree={this.previousThree}
       />;
+      {/* <button id="backButton" type="button" onClick={this.previousThree} >Back</button>
+      <button id="nextButton" type="button" onClick={this.nextThree} >Next</button> */}
+    </div>;
   }
 }
 

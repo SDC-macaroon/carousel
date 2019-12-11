@@ -9,8 +9,8 @@ const Carousel = (props) => (
         <CarouselElement key={index} style={style} />
     ))}
     </ul>
-    <button type="button" onClick={props.previousThree} >Back</button>
-    <button type="button" onClick={props.nextThree} >Next</button>
+    <button id="backButton" type="button" onClick={props.previousThree} >&lt;</button>
+    <button id="nextButton" type="button" onClick={props.nextThree} >&gt;</button>
   </div>
 );
 
