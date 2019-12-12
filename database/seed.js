@@ -15,7 +15,7 @@ let sampleStyles = [
 ];
 
 // Array of animals to be used as Unsplash search queries.
-const animals = ['Cat', 'Dog', 'Fox', 'Hedgehog', 'Hippo', 'Horse', 'Kitten', 'Lemur', 'Orangutan', 'Otter', 'Panda', 'Puppy', 'Rabbit', 'Raccoon', 'Sloth', 'Squirrel', 'Walrus'];
+const animals = ['Cat', 'Cow', 'Bear', 'Dog', 'Fox', 'Horse', 'Kitten', 'Koala', 'Otter', 'Panda', 'Pig', 'Pigeon', 'Pony', 'Puppy', 'Rabbit', 'Sheep', 'Squirrel', 'Wolf'];
 
 // Shuffle animals for the sake of variety in testing.
 const shuffleAnimals = () => {

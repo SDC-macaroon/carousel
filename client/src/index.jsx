@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Carousel from './components/Carousel.jsx';
 
-const pathArray = window.location.pathname.split('/');
-const productId = pathArray[2];
+const [,, productId] = window.location.pathname.split('/');
 
 class App extends React.Component {
   constructor() {
@@ -20,7 +18,7 @@ class App extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: `api/morestyles/${productId}`,
+      url: `/api/morestyles/${productId}`,
       success: (result) => {
         this.setState({
           styles: result,
@@ -30,22 +28,17 @@ class App extends React.Component {
   }
 
   nextThree() {
-    if (this.state.baseIndex < (this.state.styles.length - 6)) {
-      this.setState({ baseIndex: this.state.baseIndex + 3 });
-    } else {
-      this.setState({ baseIndex: this.state.styles.length - 4 });
-    }
+    this.setState(({ baseIndex, styles }) => ({
+      baseIndex: baseIndex < styles.length - 6 ? baseIndex + 3 : styles.length - 4,
+    }));
   }
 
   previousThree() {
-    if (this.state.baseIndex > 3) {
-      this.setState({ baseIndex: this.state.baseIndex - 3 });
-    } else {
-      this.setState({ baseIndex: 0 });
-    }
+    this.setState(({ baseIndex, styles }) => ({
+      baseIndex: baseIndex > 3 ? baseIndex - 3 : 0,
+    }));
   }
 
-  // eslint-disable-next-line class-methods-use-this
   render() {
     const styleSlider = {
       transform: `translateX(${this.state.baseIndex * -25}%)`,
@@ -53,14 +46,11 @@ class App extends React.Component {
     };
     return <div>
       <Carousel
-      slider={styleSlider}
-      baseIndex={this.state.baseIndex}
-      styles={this.state.styles}
-      nextThree={this.nextThree}
-      previousThree={this.previousThree}
-      />;
-      {/* <button id="backButton" type="button" onClick={this.previousThree} >Back</button>
-      <button id="nextButton" type="button" onClick={this.nextThree} >Next</button> */}
+        slider={styleSlider}
+        styles={this.state.styles}
+        nextThree={this.nextThree}
+        previousThree={this.previousThree}
+      />
     </div>;
   }
 }

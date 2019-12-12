@@ -8,7 +8,7 @@ const port = 3001;
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 app.use('/product/:productId', express.static(path.join(__dirname, '..', 'client', 'public')));
 
-app.get('/product/:ignore/api/morestyles/:productId', (req, res) => {
+app.get('/api/morestyles/:productId', (req, res) => {
   db.allRelated(req.params.productId, (err, data) => {
     if (err) {
       res.end('a problem occured with the request');
