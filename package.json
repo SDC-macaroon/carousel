@@ -9,6 +9,7 @@
     "node": "^12"
   },
   "scripts": {
+    "build": "webpack -d",
     "db:seed": "node database/seed.js",
     "start": "npx nodemon server/index.js",
     "test": "npx jest",
@@ -25,6 +26,7 @@
     "@babel/preset-react": "^7.7.4",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
+    "css-loader": "^3.3.2",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
@@ -32,8 +34,10 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "jquery": "^3.4.1",
+    "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "style-loader": "^1.0.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   }

@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import Carousel from './components/Carousel.jsx';
+import Carousel from './components/Carousel';
+import './style.css';
 
-const [,, productId] = window.location.pathname.split('/');
+const pathArray = window.location.pathname.split('/');
+const productId = pathArray[pathArray.length - 2];
 
 class App extends React.Component {
   constructor() {
@@ -34,25 +36,30 @@ class App extends React.Component {
   }
 
   previousThree() {
-    this.setState(({ baseIndex, styles }) => ({
+    this.setState(({ baseIndex }) => ({
       baseIndex: baseIndex > 3 ? baseIndex - 3 : 0,
     }));
   }
 
   render() {
+    const { baseIndex } = this.state;
+    const { styles } = this.state;
     const styleSlider = {
-      transform: `translateX(${this.state.baseIndex * -25}%)`,
+      transform: `translateX(${baseIndex * -25}%)`,
       transition: '.55s',
     };
-    return <div>
-      <Carousel
-        slider={styleSlider}
-        styles={this.state.styles}
-        nextThree={this.nextThree}
-        previousThree={this.previousThree}
-      />
-    </div>;
+    return (
+      <div>
+        <div className="title">Available t-shirt styles</div>
+        <Carousel
+          slider={styleSlider}
+          styles={styles}
+          nextThree={this.nextThree}
+          previousThree={this.previousThree}
+        />
+      </div>
+    );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('johnApp'));
