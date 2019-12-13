@@ -17,10 +17,17 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css?/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   output: {
-    filename: 'bundle.js',
+    filename: 'johnBundle.js',
     path: DIST_DIR,
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
 };
