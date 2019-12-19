@@ -6,6 +6,7 @@ import './style.css';
 
 const pathArray = window.location.pathname.split('/');
 const productId = pathArray[pathArray.length - 2];
+console.log(pathArray);
 
 class App extends React.Component {
   constructor() {

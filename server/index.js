@@ -20,4 +20,41 @@ app.get('/api/morestyles/:productId', (req, res) => {
   });
 });
 
-app.listen(port, () => console.log(`MoreStyles listening on port ${port}`));
+app.post('/api/style', (req, res) => {
+  var style = req.body;
+  db.addStyle(style, (err, data) => {
+    if (err) {
+      console.log('posting error', style);
+      res.end('a problem occured with the request');
+    } else {
+      res.end('New style added');
+    }
+  });
+});
+
+app.put('/api/style', (req, res) => {
+  var style = req.body;
+  db.updateStyle(style, (err, data) => {
+    if (err) {
+      console.log('posting error', style);
+      res.end('a problem occured with the update request');
+    } else {
+      res.end('Style updated');
+    }
+  });
+});
+
+app.delete('/api/style', (req, res) => {
+  //  Could deletion be done using a parameter?  What?
+  var style = req.body;
+  db.deleteStyle(style, (err, data) => {
+    if (err) {
+      console.log('deletion error', style);
+      res.end('a problem occured with the deletion request');
+    } else {
+      res.end('Style deleted');
+    }
+  });
+});
+
+app.listen(port, () => console.log(`Listening on port ${port}`));
