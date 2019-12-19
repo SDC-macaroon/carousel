@@ -17,11 +17,11 @@
 
 ## Usage
 
-CRUD API:
-Create/POST http://localhost:3005/api/restaurants
-Read/GET http://localhost:3005/api/restaurants/:restaurantId
-Update/PUT http://localhost:3005/api/restaurants/:restaurantId
-Delete/DELETE http://localhost:3005/api/restaurants/:restaurantId
+CRUD API:<br/>
+Create/POST http://localhost:3005/api/restaurants<br/>
+Read/GET http://localhost:3005/api/restaurants/:restaurantId<br/>
+Update/PUT http://localhost:3005/api/restaurants/:restaurantId<br/>
+Delete/DELETE http://localhost:3005/api/restaurants/:restaurantId<br/>
 
 ## Requirements
 
