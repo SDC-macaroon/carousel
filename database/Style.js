@@ -57,14 +57,14 @@ const updateStyle = (style, callback) => {
     if (err) {
       callback(err, null);
     } else {
-      callback(null, "Deletion was completed");
+      callback(null, "Update was completed");
     }
   });
 };
 
 const deleteStyle = (style, callback) => {
 
-  Style.deleteOne({ _id: style._id }, function (err) {
+  Style.deleteOne({ _id: style._id}, (err) => {
     if (err) {
       callback(err, null);
     } else {
@@ -76,3 +76,5 @@ const deleteStyle = (style, callback) => {
 exports.upsert = upsert;
 exports.allRelated = allRelated;
 exports.addStyle = addStyle;
+exports.updateStyle = updateStyle;
+exports.deleteStyle = deleteStyle;
