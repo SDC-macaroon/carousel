@@ -9,20 +9,22 @@
 
 ## Table of Contents
 
-1. [API](#API)
+1. [CRUD API](#API)
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
 
 ## API
 
-## Usage
-
 CRUD API:<br/>
 Create/POST http://localhost:3001/api/style/<br/>
 Read/GET http://localhost:3001/api/morestyles/:ProductId<br/>
 Update/PUT http://localhost:3001/api/style/<br/>
 Delete/DELETE http://localhost:3001/api/style/<br/>
+
+## Usage
+
+
 
 ## Requirements
 
