@@ -24,7 +24,7 @@ Delete/DELETE http://localhost:3001/api/style/<br/>
 
 ## Usage
 
-
+Don't even think of using this.
 
 ## Requirements
 
@@ -40,7 +40,6 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 From within the root directory:
 
 ```sh
-npm install -g webpack
 npm install
 ```
 
