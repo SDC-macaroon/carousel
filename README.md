@@ -11,22 +11,17 @@
 
 ## Table of Contents
 
-1. [API] (#API)
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
 
-## API
+## Usage
 
 CRUD API:
 Create/POST http://localhost:3005/api/restaurants
 Read/GET http://localhost:3005/api/restaurants/:restaurantId
 Update/PUT http://localhost:3005/api/restaurants/:restaurantId
 Delete/DELETE http://localhost:3005/api/restaurants/:restaurantId
-
-## Usage
-
-> Some usage instructions
 
 ## Requirements
 
