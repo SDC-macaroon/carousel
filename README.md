@@ -18,10 +18,10 @@
 ## Usage
 
 CRUD API:<br/>
-Create/POST http://localhost:3005/api/restaurants<br/>
-Read/GET http://localhost:3005/api/restaurants/:restaurantId<br/>
-Update/PUT http://localhost:3005/api/restaurants/:restaurantId<br/>
-Delete/DELETE http://localhost:3005/api/restaurants/:restaurantId<br/>
+Create/POST http://localhost:3001/api/style/<br/>
+Read/GET http://localhost:3001/api/moreStyles/:ProductId<br/>
+Update/PUT http://localhost:3001/api/style/<br/>
+Delete/DELETE http://localhost:3001/api/style/<br/>
 
 ## Requirements
 
