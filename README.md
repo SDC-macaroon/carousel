@@ -17,7 +17,7 @@
 
 CRUD API:<br/>
 Create/POST http://localhost:3001/api/style/<br/>
-Read/GET http://localhost:3001/api/moreStyles/:ProductId<br/>
+Read/GET http://localhost:3001/api/morestyles/:ProductId<br/>
 Update/PUT http://localhost:3001/api/style/<br/>
 Delete/DELETE http://localhost:3001/api/style/<br/>
 
