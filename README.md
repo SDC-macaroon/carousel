@@ -9,9 +9,12 @@
 
 ## Table of Contents
 
+1. [API](#API)
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
+
+## API
 
 ## Usage
 
