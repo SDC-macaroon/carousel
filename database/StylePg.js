@@ -1,19 +1,14 @@
-const mongoose = require('mongoose');
-const db = require('./index.js');
+//  Style model for PostgreSQL
+//const mongoose = require('mongoose');
+const db = require('./indexPg.js');
 
-mongoose.Promise = global.Promise;
-
-const styleSchema = new mongoose.Schema({
-  productId: { type: Number, unique: true },
-  photo_url: String,
-  name: String,
-  price: Number,
-  related: Array,
-});
-
-const Style = mongoose.model('Style', styleSchema);
 
 const allRelated = (id, callback) => {
+  //  get record actually requested
+  let queryString = `SELECT * FROM Style WHERE productId=${id}`;
+
+  return executeQuery(queryString, parsedOptions.values).then(results => results[0]);
+
   Style.find({ productId: id }, 'related', (err1, style) => {
     if (style.length === 0) {
       callback('error: productId not found', null);

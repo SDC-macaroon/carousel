@@ -11,16 +11,18 @@
   "scripts": {
     "build": "webpack -d",
     "db:seed": "node database/seed.js",
-    "pg:seed": "node database/pgSeed.js",
-    "cs:seed": "node database/csSeed.js",
+    "db:seedPg": "node database/seedPg.js",
+    "db:seedCs": "node database/seedCs.js",
     "start": "npx nodemon server/index.js",
     "test": "npx jest",
     "webpack": "webpack -d --watch"
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "mongoose": "^5.7.13"
+    "mongoose": "^5.7.13",
+    "pg": "^7.15.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
