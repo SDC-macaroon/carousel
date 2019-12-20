@@ -11,6 +11,8 @@
   "scripts": {
     "build": "webpack -d",
     "db:seed": "node database/seed.js",
+    "pg:seed": "node database/pgSeed.js",
+    "cs:seed": "node database/csSeed.js",
     "start": "npx nodemon server/index.js",
     "test": "npx jest",
     "webpack": "webpack -d --watch"

@@ -45,5 +45,36 @@ const upsert = (styles) => {
     .catch((err) => console.log('error during upsert: ', err));
 };
 
+const addStyle = (style, callback) => {
+  newStyle = new Style(style);
+  newStyle.save(function (err, booking) {
+    callback(err, booking);
+  });
+};
+
+const updateStyle = (style, callback) => {
+  Style.findByIdAndUpdate(style._id, style, (err)=>{
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, "Update was completed");
+    }
+  });
+};
+
+const deleteStyle = (style, callback) => {
+
+  Style.deleteOne({ _id: style._id}, (err) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, "Deletion was completed");
+    }
+  });
+};
+
 exports.upsert = upsert;
 exports.allRelated = allRelated;
+exports.addStyle = addStyle;
+exports.updateStyle = updateStyle;
+exports.deleteStyle = deleteStyle;
