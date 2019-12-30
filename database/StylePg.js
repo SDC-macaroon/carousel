@@ -1,11 +1,24 @@
 //  Style model for PostgreSQL
 //const mongoose = require('mongoose');
-const db = require('./indexPg.js');
+const pgPool = require('./indexPg.js');
 
 
 const allRelated = (id, callback) => {
   //  get record actually requested
-  let queryString = `SELECT * FROM Style WHERE productId=${id}`;
+  //  do I need to checkout a new client here?  Think so.
+  // async/await - check out a client
+;(async () => {
+  const client = await pgPool.connect()
+  try {
+    const res = await client.query('SELECT * FROM users WHERE id = $1', [1])
+    console.log(res.rows[0])
+  } finally {
+    // Make sure to release the client before any error handling,
+    // just in case the error handling itself throws an error.
+    client.release()
+  }
+})().catch(err => console.log(err.stack))
+  let queryString = `SELECT * FROM style WHERE productId=${id}`;
 
   return executeQuery(queryString, parsedOptions.values).then(results => results[0]);
 
@@ -40,10 +53,24 @@ const upsert = (styles) => {
     .catch((err) => console.log('error during upsert: ', err));
 };
 
-const addStyle = (style, callback) => {
-  newStyle = new Style(style);
-  newStyle.save(function (err, booking) {
-    callback(err, booking);
+const addStyle = (style) => {
+  // async/await - check out a client
+;(async () => {
+  const client = await pool.connect()
+  try {
+    const res = await client.query('SELECT * FROM users WHERE id = $1', [1])
+    console.log(res.rows[0])
+  } finally {
+    // Make sure to release the client before any error handling,
+    // just in case the error handling itself throws an error.
+    client.release()
+  }
+})().catch(err => console.log(err.stack))
+  var query = `INSERT INTO styles (${style.productId}, ${style.photo_url}, ${style.name}, ${style.price}, ${style.related}`;
+  pool.query(query, (error, results) => {
+    if (error) {
+      throw error;
+    }
   });
 };
 

@@ -29,18 +29,20 @@ const shuffleAnimals = () => {
   }
 };
 
-const buildSampleStyles = () => {
+const buildSampleStyles = (productId) => {
   sampleStyles = []; // Overwrites sampleSyles with empty array before populating it.
   const basePrice = 14.95;
   const priceAddMax = 11;
   const baseQuantity = 7;
   const quantityAddMax = 8;
 
-  let productId = 2001;   //  will have to be imported into function
+  //let productId = 2001;   //  will have to be imported into function
   let animalIndex = 0;
 
   //  jw productId is going to go up to ten million
-  while (productId < 2101 && animalIndex <= animals.length) {
+  //  create 100 products here
+  let productIdLast = productId + 100;
+  while (productId < productIdLast && animalIndex <= animals.length) {
     const currentAnimal = animals[animalIndex];
     const clusterSize = baseQuantity + Math.floor(Math.random() * quantityAddMax);
     const currentCluster = [];
@@ -75,7 +77,7 @@ const buildSampleStyles = () => {
 };
 
 
-const buildCluster = async () => {
+const buildCluster = async (productId) => {
   shuffleAnimals();
   // Will contain fifteen image urls of the current animal.
   let currentAnimalUrls = [];
@@ -102,12 +104,12 @@ const buildCluster = async () => {
       currentAnimalUrls.push(response[j].urls.small);
     }
     // console.log('currentAnimalUrls: ', currentAnimalUrls);
-    allAnimalUrls.push(currentAnimalUrls);
+    allAnimalUrls.push(currentAnimalUrls);  //  jw we need to save allAnimalUrls to reuse over and over
     currentAnimalUrls = [];
   }
-  // console.log('allAnimalUrls: ', allAnimalUrls);
+  console.log('allAnimalUrls: ', allAnimalUrls);
 
-  buildSampleStyles();
+  buildSampleStyles(productId);
   //  jw return generated data to database function instead of posting
   return sampleStyles;
   //  upsertSampleStyles();

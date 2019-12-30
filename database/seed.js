@@ -1,4 +1,6 @@
 /* eslint-disable no-continue */
+//  this creates the initial dataset for replicating.  Unsplash limits API calls to 5000/day.
+//  for actual database seeding, see seedPg.js and generateCsv.js (Cassandra)
 const axios = require('axios');
 const Style = require('./Style.js');
 const keys = require('../keys.js');

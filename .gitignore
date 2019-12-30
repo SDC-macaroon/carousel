@@ -28,3 +28,5 @@ build/
 client/public/*
 !client/public/index.html
 
+# data files
+*.csv

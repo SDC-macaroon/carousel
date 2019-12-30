@@ -13,6 +13,9 @@
     "db:seed": "node database/seed.js",
     "db:seedPg": "node database/seedPg.js",
     "db:seedCs": "node database/seedCs.js",
+    "db:testCs": "node database/testCs.js",
+    "generateCsv": "node database/generateCsv.js",
+    "clusterTest": "node database/clusterTest.js",
     "start": "npx nodemon server/index.js",
     "test": "npx jest",
     "webpack": "webpack -d --watch"
@@ -20,6 +23,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "body-parser": "^1.19.0",
+    "cassandra-driver": "^4.3.1",
     "express": "^4.17.1",
     "mongoose": "^5.7.13",
     "pg": "^7.15.1"
