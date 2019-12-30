@@ -1,8 +1,5 @@
-/* eslint-disable no-continue */
-//  this creates the initial dataset for replicating.  Unsplash limits API calls to 5000/day.
-//  for actual database seeding, see seedPg.js and generateCsv.js (Cassandra)
+//  create array of 100 products to put in database
 const axios = require('axios');
-const Style = require('./Style.js');
 const keys = require('../keys.js');
 
 // Declared using one example style for clarity, example is overwritten by buildSampleStyles().
@@ -19,6 +16,9 @@ let sampleStyles = [
 // Array of animals to be used as Unsplash search queries.
 const animals = ['Cat', 'Cow', 'Bear', 'Dog', 'Fox', 'Horse', 'Kitten', 'Koala', 'Otter', 'Panda', 'Pig', 'Pigeon', 'Pony', 'Puppy', 'Rabbit', 'Sheep', 'Squirrel', 'Wolf'];
 
+// Final array of arrays, each array of which will contain fifteen image urls.
+const allAnimalUrls = [];
+
 // Shuffle animals for the sake of variety in testing.
 const shuffleAnimals = () => {
   for (let i = animals.length - 1; i > 0; i--) {
@@ -28,28 +28,21 @@ const shuffleAnimals = () => {
     animals[randomIndex] = hold;
   }
 };
-shuffleAnimals();
 
-// Final array of arrays, each array of which will contain fifteen image urls.
-const allAnimalUrls = [];
-
-// This function generates a series of "clusters," stopping when 100 records have been generated.
-// For each cluster, somewhere between 7 and 15 records using the next random animal are generated,
-//   each with its own productId, photo_url, name, and price.
-// When all records in a cluster have been created, the productId of each of them are inserted into
-//   the 'related' property array of each other element in the cluster.
-// All records within the cluster are then pushed to the sampleStyles array.
-const buildSampleStyles = () => {
+const buildSampleStyles = (productId) => {
   sampleStyles = []; // Overwrites sampleSyles with empty array before populating it.
   const basePrice = 14.95;
   const priceAddMax = 11;
   const baseQuantity = 7;
   const quantityAddMax = 8;
 
-  let productId = 2001;
+  //let productId = 2001;   //  will have to be imported into function
   let animalIndex = 0;
 
-  while (productId < 2101 && animalIndex <= animals.length) {
+  //  jw productId is going to go up to ten million
+  //  create 100 products here
+  let productIdLast = productId + 100;
+  while (productId < productIdLast && animalIndex <= animals.length) {
     const currentAnimal = animals[animalIndex];
     const clusterSize = baseQuantity + Math.floor(Math.random() * quantityAddMax);
     const currentCluster = [];
@@ -83,18 +76,9 @@ const buildSampleStyles = () => {
   }
 };
 
-// This function inserts the generated style records into the database.
-// It utilizes upsert, allowing records to be replaced if/when a given productId already exists in
-//   the database, and otherwise creating those records.
-const upsertSampleStyles = () => {
-  Style.upsert(sampleStyles);
-};
 
-// This function generates an array of arrays equal to the number of animals in animals, each
-//   containing fifteen image urls of its coresponding animal as returned by API call to unsplash.
-// It then calls buildSampleStyles(), which uses the gathered urls to build sample data, and
-//   upsertSampleStyles() which inserts this sample data into the db.
-const populateAllAnimalUrls = async () => {
+const buildCluster = async (productId) => {
+  shuffleAnimals();
   // Will contain fifteen image urls of the current animal.
   let currentAnimalUrls = [];
   // String which will be set and used to perform an axios GET request to the unsplash API.
@@ -120,13 +104,15 @@ const populateAllAnimalUrls = async () => {
       currentAnimalUrls.push(response[j].urls.small);
     }
     // console.log('currentAnimalUrls: ', currentAnimalUrls);
-    allAnimalUrls.push(currentAnimalUrls);
+    allAnimalUrls.push(currentAnimalUrls);  //  jw we need to save allAnimalUrls to reuse over and over
     currentAnimalUrls = [];
   }
-  // console.log('allAnimalUrls: ', allAnimalUrls);
+  console.log('allAnimalUrls: ', allAnimalUrls);
 
-  buildSampleStyles();
-  upsertSampleStyles();
+  buildSampleStyles(productId);
+  //  jw return generated data to database function instead of posting
+  return sampleStyles;
+  //  upsertSampleStyles();
 };
 
-populateAllAnimalUrls();
+module.exports = buildCluster;

@@ -1,9 +1,17 @@
-/* eslint-disable no-continue */
-//  this creates the initial dataset for replicating.  Unsplash limits API calls to 5000/day.
-//  for actual database seeding, see seedPg.js and generateCsv.js (Cassandra)
+// work file for building a cluster of database records.  Modified from seed.js
 const axios = require('axios');
-const Style = require('./Style.js');
+// const Style = require('./Style.js');  //  jw Style is the mongoose model
 const keys = require('../keys.js');
+
+/*
+  John's sequence of operations:
+    1. create sampleStyles & animals arrays
+    2. shuffle animals
+    3. create allAnimalUrls array
+    4. populateAllAnimalUrls(), which calls
+       4a.  buildSampleStyles() once as its last step
+
+*/
 
 // Declared using one example style for clarity, example is overwritten by buildSampleStyles().
 let sampleStyles = [
@@ -46,9 +54,10 @@ const buildSampleStyles = () => {
   const baseQuantity = 7;
   const quantityAddMax = 8;
 
-  let productId = 2001;
+  let productId = 2001;   //  will have to be imported into function
   let animalIndex = 0;
 
+  //  jw productId is going to go up to ten million
   while (productId < 2101 && animalIndex <= animals.length) {
     const currentAnimal = animals[animalIndex];
     const clusterSize = baseQuantity + Math.floor(Math.random() * quantityAddMax);
@@ -86,14 +95,16 @@ const buildSampleStyles = () => {
 // This function inserts the generated style records into the database.
 // It utilizes upsert, allowing records to be replaced if/when a given productId already exists in
 //   the database, and otherwise creating those records.
-const upsertSampleStyles = () => {
-  Style.upsert(sampleStyles);
-};
+//  jw took this out because need to separate from database functions
+// const upsertSampleStyles = () => {
+//   Style.upsert(sampleStyles);
+// };
 
 // This function generates an array of arrays equal to the number of animals in animals, each
 //   containing fifteen image urls of its coresponding animal as returned by API call to unsplash.
 // It then calls buildSampleStyles(), which uses the gathered urls to build sample data, and
 //   upsertSampleStyles() which inserts this sample data into the db.
+//  jw why is it async ???
 const populateAllAnimalUrls = async () => {
   // Will contain fifteen image urls of the current animal.
   let currentAnimalUrls = [];
@@ -126,7 +137,9 @@ const populateAllAnimalUrls = async () => {
   // console.log('allAnimalUrls: ', allAnimalUrls);
 
   buildSampleStyles();
-  upsertSampleStyles();
+  //  jw return generated data to database function instead of posting
+  return sampleStyles;
+  //  upsertSampleStyles();
 };
 
 populateAllAnimalUrls();

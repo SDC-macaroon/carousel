@@ -13,6 +13,16 @@ const styleSchema = new mongoose.Schema({
 
 const Style = mongoose.model('Style', styleSchema);
 
+const getAll = (callback) => {
+  Style.find({}, (err, styles) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, styles);
+    }
+  });
+};
+
 const allRelated = (id, callback) => {
   Style.find({ productId: id }, 'related', (err1, style) => {
     if (style.length === 0) {
@@ -57,7 +67,7 @@ const updateStyle = (style, callback) => {
     if (err) {
       callback(err, null);
     } else {
-      callback(null, "Update was completed");
+      callback(null, 'Update was completed');
     }
   });
 };
@@ -68,12 +78,13 @@ const deleteStyle = (style, callback) => {
     if (err) {
       callback(err, null);
     } else {
-      callback(null, "Deletion was completed");
+      callback(null, 'Deletion was completed');
     }
   });
 };
 
 exports.upsert = upsert;
+exports.getAll = getAll;
 exports.allRelated = allRelated;
 exports.addStyle = addStyle;
 exports.updateStyle = updateStyle;

@@ -1,0 +1,105 @@
+//  this will create the connection when running PostGreSQL
+const { Pool } = require('pg');
+
+//const pool = new Pool();
+const pgPool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'carouselStyles',
+  password: 'dhaka2',
+  port: 5432,
+})
+// the pool will emit an error on behalf of any idle clients
+// it contains if a backend error or network partition happens
+pgPool.on('error', (err, client) => {
+  console.error('Unexpected error on idle client', err)
+  process.exit(-1)
+})
+// async/await - check out a client
+;(async () => {
+  const client = await pgPool.connect()
+  try {
+    const res = await client.query('SELECT * FROM junk');
+    console.log(res.rows[0]);
+  } finally {
+    // Make sure to release the client before any error handling,
+    // just in case the error handling itself throws an error.
+    client.release();
+  }
+})().catch(err => console.log(err.stack))
+
+
+// var conString = "postgres://postgres:dhaka2@localhost:5432/carouselSchema";
+
+// var client = new pg.Client(conString);
+// client.connect();
+// //console.log(client);
+// //queries are queued and executed one after another once the connection becomes available
+// var x = 1000;
+// var jive=
+// client.query("INSERT INTO junk(name, a_number) values('Ted',12)");
+// console.log(jive);
+
+// while (x > 0) {
+//     client.query("INSERT INTO junk(name, a_number) values('Ted',12)");
+//     client.query("INSERT INTO junk(name, a_number) values($1, $2)", ['John', x]);
+//     x = x - 1;
+// }
+
+// var query = client.query("SELECT * FROM junk");
+// //fired after last row is emitted
+
+// query.on('row', function(row) {
+//   console.log(row);
+// });
+
+// query.on('end', function() {
+//   client.end();
+// });
+
+// const pg = require('pg');
+// const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
+
+// const client = new pg.Client(connectionString);
+// client.connect();
+// const query = client.query(
+//   'CREATE TABLE IF NOT EXISTS carouselStyles.styles (
+//       id SERIAL PRIMARY KEY,
+//       productId INTEGER NOT NULL,
+//       photo_url VARCHAR(250),
+//       name VARCHAR(100),
+//       price MONEY,
+//       related INTEGER[]
+//     )'
+//   );
+// query.on('end', () => { client.end(); });
+// const pg = require('pg');
+
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'carouselStyles',
+//   password: 'dhaka2',
+//   port: 5432,
+// })
+
+// pool.query("CREATE TABLE session(sessionguid UUID NOT NULL, created
+//   text NOT NULL, sessionlife integer NOT NULL)",
+//       (err, res) => {
+//       console.log(err, res);
+//       pool.end();
+//   });
+//   pool.query('CREATE TABLE IF NOT EXISTS carouselStyles.styles (
+//   id SERIAL PRIMARY KEY,
+//   productId INTEGER NOT NULL,
+//   photo_url VARCHAR(250),
+//   name VARCHAR(100),
+//   price MONEY,
+//   related INTEGER[]
+// )',
+// (err, res) => {
+//   console.log(err, res);
+//   pool.end();
+// });
+
+module.exports = pgPool;
