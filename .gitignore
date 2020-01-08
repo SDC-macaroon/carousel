@@ -30,3 +30,6 @@ client/public/*
 
 # data files
 *.csv
+
+# New Relic
+newrelic.js
