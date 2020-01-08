@@ -1,0 +1,37 @@
+config:
+  target: 'http://localhost:3001'
+  http:
+    pool: 10
+  processor: './testGen.js'
+  phases:
+  - duration: 10
+    arrivalRate: 1
+  - duration: 10
+    arrivalRate: 10
+    rampTo: 100
+  - duration: 10
+    arrivalRate: 100
+  - duration: 10
+    arrivalRate: 1000
+scenarios:
+  - name: 'GET test'
+    flow:
+      - function: 'getRandomId'
+      - get:
+          url: '/api/moreStyles/{{ productId }}'
+      # - log: "Current productId is: {{ productId }}"
+
+  - name: 'POST test'
+    flow:
+      - function: 'getNextId'
+      - post:
+          url: '/api/style/'
+          json:
+            productId: "{{ productId }}"
+            photo_url: "http://fake.url"
+            name: "fake style"
+            price: 10.52
+            related: []
+      # - delete:
+      #     url: "/api/style/{{ productId }}"
+      # - log: "Added item {{ productId }}"
